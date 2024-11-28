@@ -3,9 +3,8 @@ package com.steca.shopping
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
-class ShoppingApplication
+@SpringBootApplication class ShoppingApplication
 
 fun main(args: Array<String>) {
-	runApplication<ShoppingApplication>(*args)
+    runApplication<ShoppingApplication>(*args)
 }
