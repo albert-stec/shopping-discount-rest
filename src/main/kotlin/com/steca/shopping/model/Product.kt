@@ -1,4 +1,4 @@
-package com.steca.shopping.model.dbo
+package com.steca.shopping.mode
 
 import jakarta.persistence.*
 import java.math.BigDecimal
@@ -18,3 +18,5 @@ data class Product(
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     val id: UUID? = null,
 )
+
+data class ProductWithDiscount(val product: Product, val discountedPrice: BigDecimal)

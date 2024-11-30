@@ -1,6 +1,6 @@
 package com.steca.shopping.repository
 
-import com.steca.shopping.model.dbo.Product
+import com.steca.shopping.mode.Product
 import java.util.Optional
 import java.util.UUID
 import org.springframework.data.jpa.repository.JpaRepository
