@@ -19,7 +19,7 @@ class ProductService(
         }
     }
 
-    fun getByUuidWithDiscount(uuid: UUID, quantity: Int): ProductWithDiscount {
+    fun calculateTotalPrice(uuid: UUID, quantity: Int): ProductWithDiscount {
         if (quantity <= 0) throw InvalidQuantityException("Quantity must be greater than zero")
         val product = getByUuid(uuid)
         val discountedPrice = calculateDiscountedPrice(product.price, quantity)
@@ -27,9 +27,9 @@ class ProductService(
     }
 
     private fun calculateDiscountedPrice(price: BigDecimal, quantity: Int): BigDecimal {
-        val totalPrice = price.multiply(BigDecimal(quantity))
+        val priceByQuantity = price.multiply(BigDecimal(quantity))
         val totalDiscount = discountService.calculateTotalDiscount(quantity, price)
-        return totalPrice.subtract(totalDiscount)
+        return priceByQuantity.subtract(totalDiscount)
     }
 }
 
