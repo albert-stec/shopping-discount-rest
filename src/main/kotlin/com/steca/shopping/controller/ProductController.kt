@@ -1,6 +1,7 @@
 package com.steca.shopping.controller
 
 import com.steca.shopping.config.DiscountConfig
+import com.steca.shopping.model.dbo.Product
 import com.steca.shopping.service.ProductService
 import java.util.*
 import org.springframework.http.ResponseEntity
@@ -15,9 +16,9 @@ class ProductController(
     private val productService: ProductService,
     private val discountConfig: DiscountConfig,
 ) {
-
     @GetMapping("/{uuid}")
-    fun getProduct(@PathVariable uuid: UUID): ResponseEntity<DiscountConfig?> {
-        return ResponseEntity.ok(discountConfig)
+    fun getByUuid(@PathVariable uuid: UUID): ResponseEntity<Product> {
+        val product = productService.getByUuid(uuid)
+        return ResponseEntity.ok(product)
     }
 }
