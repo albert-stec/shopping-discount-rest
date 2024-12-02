@@ -13,6 +13,31 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - shopping-network
+
+  app:
+    image: openjdk:17-jdk-alpine
+    container_name: shopping-app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./build/libs/shopping-0.0.1-SNAPSHOT.jar:/app/app.jar
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shoppingdb
+      SPRING_DATASOURCE_USERNAME: shopping_user
+      SPRING_DATASOURCE_PASSWORD: shopping_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_PROFILES_ACTIVE: default
+    depends_on:
+      - postgres
+    command: ["java", "-jar", "/app/app.jar"]
+    networks:
+      - shopping-network
 
 volumes:
   postgres_data:
+
+networks:
+  shopping-network:
+    driver: bridge
