@@ -1,6 +1,5 @@
 package com.steca.shopping.controller
 
-import com.steca.shopping.config.DiscountConfig
 import com.steca.shopping.mode.Product
 import com.steca.shopping.mode.ProductWithDiscount
 import com.steca.shopping.service.ProductService
@@ -14,10 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/products")
-class ProductController(
-    private val productService: ProductService,
-    private val discountConfig: DiscountConfig,
-) {
+class ProductController(private val productService: ProductService) {
     @GetMapping("/{uuid}")
     fun getByUuid(@PathVariable uuid: UUID): ResponseEntity<Product> {
         val product = productService.getByUuid(uuid)
@@ -27,7 +23,7 @@ class ProductController(
     @GetMapping("/{uuid}/total-price")
     fun calculateTotalPrice(
         @PathVariable uuid: UUID,
-        @RequestParam quantity: Int,
+        @RequestParam(value = "quantity", required = false, defaultValue = "0") quantity: Int,
     ): ResponseEntity<ProductWithDiscount> {
         val productWithDiscount = productService.calculateTotalPrice(uuid, quantity)
         return ResponseEntity.ok(productWithDiscount)
